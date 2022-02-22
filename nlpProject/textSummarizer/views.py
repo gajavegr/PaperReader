@@ -1,4 +1,3 @@
-from lib2to3.pgen2 import token
 import os
 from django.shortcuts import render
 
@@ -99,53 +98,24 @@ def generate_summary(file_string, top_n=5):
     # Step 5 - Offcourse, output the summarize text
     # print("Summarize Text: \n", ". ".join(summarize_text))
     summarized_text = ". ".join(summarize_text)
-    print("Summarize Text: \n", summarized_text)
+    # print("Summarize Text: \n", summarized_text)
     return summarized_text
 
 # Create your views here.
 def home(request):
     return render(request,"home.html",{})
 
-def regex(request):
-    import re
+def summarizeText(request):
     if request.method == "POST":
-        phonepattern=r"\d{3}-\d{3}-\d{4}"
-        regex_area = request.POST["regexform"]
-        # regex_phone = re.findall(phonepattern,regex_area)
-        regex_phone = generate_summary(regex_area,2)
-        return render(request, "regex.html",{"phone":regex_phone})
+        textToSummarize = request.POST["summarizeForm"]
+        generatedSummary = generate_summary(textToSummarize,2)
+        return render(request, "textSummary.html",{"text_summary":generatedSummary})
     else:
         return render(request,"home.html",{})
 
-def lemma(request):
-    # # import nltk
-    # # # nltk.download("omw-1.4")
-    # # from nltk.stem import WordNetLemmatizer
-    # # wordnet_lemmatizer = WordNetLemmatizer()
-    # # if request.method=="POST":
-    # #     lemma_area = request.POST["lemmaform"]
-    # #     tokenization = nltk.word_tokenize(lemma_area)
-    # #     tokens = [i for i in tokenization]
-    # #     lemma_list = [wordnet_lemmatizer.lemmatize(i) for i in tokens]
-    # #     lemmas = [i for i in lemma_list]
-    # #     return render(request,"lemma.html", {"unprocessed":tokens,"lemmatized":lemmas})
-    # # else:
-    # #     return render(request,"home.html",{})
-    
-    # import spacy
-    # nlp = spacy.load("en_core_web_sm")
-    # if request.method == "POST":
-    #     lemma_area = request.POST["lemmaform"]
-    #     lemma_area = nlp(lemma_area)
-    #     token_list = [i.text for i in lemma_area]
-    #     tokens = [i for i in token_list]
-    #     lemmas_list = [i.lemma_ for i in lemma_area]
-    #     lemmas = [i for i in lemmas_list]
-    #     return render(request,"lemma.html",{"unprocessed":tokens,"lemmatized":lemmas})
-    # else:
-    #     return render(request,"home.html",{})
+def summarizeAbstract(request):
     if request.method == "POST":
-        url = request.POST["lemmaform"]
+        url = request.POST["abstractSummaryForm"]
         # url = 'http://www.arkansasrazorbacks.com/wp-content/uploads/2017/02/Miami-Ohio-Game-2.pdf'
         r = requests.get(url)
         # f = io.BytesIO(r.content)
@@ -155,8 +125,7 @@ def lemma(request):
         content = data_func.convert_pdf_to_string(f)
         # print(content)
         os.remove(f)
-        # return render(request,"lemma.html",{"unprocessed":tokens,"lemmatized":lemmas})
-        return render(request,"lemma.html",{"lemmatized":generate_summary(content,2)})
+        return render(request,"summarizeAbstract.html",{"summarizedAbstract":generate_summary(content,2)})
     else:
         return render(request,"home.html",{})
 
@@ -166,13 +135,3 @@ def download_file(download_url, filename):
     file = open(filename + ".pdf", 'wb')
     file.write(response.read())
     file.close()
-
-
-
-def pos(request):
-    return render(request,"pos.html",{})
-
-def ner(request):
-    return render(request,"ner.html",{})
-
-

@@ -14,10 +14,10 @@
 
 <div class="container">
     <div class="row">
-        <form class="form-group widthx" method="POST" action="{% url 'regex' %}">
+        <form class="form-group widthx" method="POST" action="{% url 'textSummary' %}">
             {% csrf_token %}
             <label for="exampleFormControlTextarea1"><strong>Enter text</strong></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="regexform" placeholder="Please enter the text here to be summarized."></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="summarizeForm" placeholder="Please enter the text here to be summarized."></textarea>
             </break>
             <div class="container">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Summarize Text!</button>
@@ -32,13 +32,13 @@
 
 <div class="container">
     <div class="row">
-        <form class="form-group widthx" method="POST" action="{% url 'lemma' %}">
+        <form class="form-group widthx" method="POST" action="{% url 'abstractSummary' %}">
             {% csrf_token %}
-            <label for="exampleFormControlTextarea1"><strong>Enter PDF URL</strong></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="lemmaform" placeholder="Please paste the url to the pdf of the paper to be summarized."></textarea>
+            <label for="exampleFormControlTextarea1"><strong>Enter arXiv PDF URL</strong></label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="abstractSummaryForm" placeholder="Please paste the url to the pdf of the paper for which the abstract will be summarized."></textarea>
             </break>
             <div class="container">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Summarize PDF!</button>
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Summarize Abstract!</button>
             </div>
         </form>
 
@@ -47,59 +47,4 @@
 
 <br>
 <br>
-
-
-<!-- <div class="container">
-    <div class="row">
-        <form class="form-group widthx" method="POST" action="{% url 'lemma' %}">
-            {% csrf_token %}
-            <label for="exampleFormControlTextarea1"><strong>Text Summarization with Cosine Similarity</strong></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="lemmaform" placeholder="Please enter the text here in order to perform lemmatization"></textarea>
-            </break>
-            <div class="container">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Lemma</button>
-            </div>
-        </form>
-
-    </div>
-</div>
-
-<br>
-<br>
-
-
-<div class="container">
-    <div class="row">
-        <form class="form-group widthx" method="POST" action="{% url 'pos' %}">
-            {% csrf_token %}
-            <label for="exampleFormControlTextarea1"><strong>Enter text</strong></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="posform" placeholder="Please enter the text here in order to perform part of speech tagging"></textarea>
-            </break>
-            <div class="container">
-                <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">POS</button>
-            </div>
-        </form>
-
-    </div>
-</div>
-
-<br>
-<br>
-
-
-<div class="container">
-    <div class="row">
-        <form class="form-group widthx" method="POST" action="{% url 'ner' %}">
-            {% csrf_token %}
-            <label for="exampleFormControlTextarea1"><strong>Enter text</strong></label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="nerform" placeholder="Please enter the text here in order to perform named entity recognition"></textarea>
-            </break>
-            <div class="container">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">NER</button>
-            </div>
-        </form>
-
-    </div>
-</div> -->
-
 {% endblock %}
