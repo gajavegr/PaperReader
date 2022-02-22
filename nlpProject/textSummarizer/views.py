@@ -1,4 +1,5 @@
 import os
+import re
 from django.shortcuts import render
 
 import nltk
@@ -25,7 +26,7 @@ def read_article(file_string):
     sentences = []
 
     for sentence in article:
-        print(sentence)
+        # print(sentence)
         sentences.append(sentence.replace("[^a-zA-Z]", " ").split(" "))
     sentences.pop() 
     
@@ -90,7 +91,7 @@ def generate_summary(file_string, top_n=5):
 
     # Step 4 - Sort the rank and pick top sentences
     ranked_sentence = sorted(((scores[i],s) for i,s in enumerate(sentences)), reverse=True)    
-    print("Indexes of top ranked_sentence order are ", ranked_sentence)    
+    # print("Indexes of top ranked_sentence order are ", ranked_sentence)    
 
     for i in range(top_n):
       summarize_text.append(" ".join(ranked_sentence[i][1]))
@@ -124,8 +125,20 @@ def summarizeAbstract(request):
         f = f"{pdf_filename}.pdf"
         content = data_func.convert_pdf_to_string(f)
         # print(content)
+        abstract_location = 0
+        introduction_location = 0
+        if content.__contains__("Abstract"):
+            # print("found Abstract")
+            abstract_location = content.index("Abstract")
+        if content.__contains__("Introduction"):
+            # print("found Introduction")
+            introduction_location = content.index("Introduction")
+        abstract = content[abstract_location+8:introduction_location-5].replace("\n"," ").replace(" - ","")
+        # pattern = "Abstract(.*)Introduction"
+        # abstract = re.search(pattern, content).group(1)
+        # print(abstract)
         os.remove(f)
-        return render(request,"summarizeAbstract.html",{"summarizedAbstract":generate_summary(content,2)})
+        return render(request,"summarizeAbstract.html",{"paper":url,"abstract":abstract,"summarizedAbstract":generate_summary(abstract,2)})
     else:
         return render(request,"home.html",{})
 
