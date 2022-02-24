@@ -1,1 +1,1 @@
-web: gunicorn nlpProject.wsgi
+web: gunicorn djangorivers.wsgi --log-file -
