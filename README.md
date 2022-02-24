@@ -8,3 +8,6 @@ few-sentence summary of the key claims and results.
 
 
 Ganesh Gajavelli and Rachel Harness
+
+
+Thank you [Eric Chen](https://github.com/eric11eca) for your help in debugging the deployment to Heroku :)
